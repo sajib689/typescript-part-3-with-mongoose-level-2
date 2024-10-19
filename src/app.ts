@@ -1,11 +1,11 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
-import { Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 const app:Application = express();
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({extended: true}))
-app.get("/", (req: Request, res: Response) => {
+app.get("/", async(req: Request, res: Response) => {
   // create a new interface
   interface IUser {
     id: string;
@@ -26,7 +26,7 @@ app.get("/", (req: Request, res: Response) => {
   }
   
   // creating a new Schema object
-  const useSchema = new Schema <IUser> ({
+  const userSchema = new Schema <IUser> ({
     id: {
       type: String,
       required: true,
@@ -59,6 +59,7 @@ app.get("/", (req: Request, res: Response) => {
     },
     gender: {
       type: String,
+      enum: ["male", "female"],
       required: true,
     },
     email: {
@@ -77,9 +78,27 @@ app.get("/", (req: Request, res: Response) => {
       type: String,
     }
   })
-
-
-    
+  // create the model
+  const User = model<IUser>('User', userSchema)
+  
+  const user = new User ({
+    id: '232',
+    role: 'student',
+    password: '332334',
+    name: {
+      firstName: 'Md',
+      middleName: 'Sajib',
+      lastName: 'Hossen',
+    },
+    dateOfBirth: '1-1-1999',
+    gender: 'male',
+    email: 'sajibbabu751@gmail.com',
+    contactNumber: '01611970979',
+    presentAddress: 'Muragacha ',
+    permanentAddress: 'Muragacha',
+  })
+  await user.save()
+  console.log(user.email)
   });
 
   export default app;
