@@ -24,10 +24,58 @@ app.get("/", (req: Request, res: Response) => {
     presentAddress?: string;
     permanentAddress?: string;
   }
+  
   // creating a new Schema object
-
   const useSchema = new Schema <IUser> ({
-    
+    id: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    role: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    name: {
+      firstName: {
+        type: String,
+        required: true,
+      },
+      middleName: {
+        type: String,
+        required: true,
+      },
+      lastName: {
+        type: String,
+        required: true,
+      }
+    },
+    dateOfBirth: {
+      type: String,
+    },
+    gender: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+    },
+    contactNumber: {
+      type: String,
+    },
+    emergencyContactNumber: {
+      type: String,
+    },
+    presentAddress: {
+      type: String,
+    },
+    permanentAddress: {
+      type: String,
+    }
   })
 
 
